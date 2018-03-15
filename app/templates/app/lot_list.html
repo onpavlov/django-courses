@@ -1,0 +1,55 @@
+{% extends 'app/base.html' %}
+
+{% block title %}Список лотов{% endblock %}
+
+{% block content %}
+    <div class="card-deck mb-3 text-center">
+
+    {% for lot in lots %}
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">Лот №{{ lot.id }}</h4>
+            </div>
+            <div class="card-body">
+                <h2 class="card-title pricing-card-title">{{ lot.name }}</h2>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li>Окончание через: {{ lot.get_end_time }}</li><br>
+                  <li>
+                      <p class="description">{{ lot.description }}</p>
+                      <a href="{% url 'lot_detail' id=lot.pk %}">Подробнее</a>
+                  </li>
+                </ul>
+                {% if user.is_authenticated %}
+                <button type="button" class="btn btn-lg btn-block btn-primary">Сделать ставку</button>
+                {% else %}
+                <button type="button" class="btn btn-lg btn-block btn-outline-primary"
+                        onclick="window.location = '{% url 'registration' %}'">Зарегистрироваться</button>
+                {% endif %}
+            </div>
+        </div>
+        {% if forloop.counter == 3 %}
+        </div>
+        <div class="card-deck mb-3 text-center">
+        {% endif %}
+    {% endfor %}
+
+    </div>
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if lots.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ lots.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ lots.number }} of {{ lots.paginator.num_pages }}.
+            </span>
+
+            {% if lots.has_next %}
+                <a href="?page={{ lots.next_page_number }}">next</a>
+                <a href="?page={{ lots.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+{% endblock %}

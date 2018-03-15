@@ -1,0 +1,18 @@
+{% extends 'app/base.html' %}
+
+{% block title %}Лот {{ lot.name }}{% endblock %}
+
+{% block content %}
+<ul>
+    <li>Начало аукциона: {{ lot.date_from }}</li>
+    <li>Окончание аукциона: {{ lot.date_to }}</li>
+    <li>Описание: {{ lot.description }}</li>
+</ul>
+
+    {% if user.is_authenticated %}
+        <button type="button" class="btn btn-lg btn-block btn-primary">Сделать ставку</button>
+    {% else %}
+        <button type="button" class="btn btn-lg btn-block btn-outline-primary"
+                        onclick="window.location = '{% url 'registration' %}'">Зарегистрироваться</button>
+    {% endif %}
+{% endblock %}

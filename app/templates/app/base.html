@@ -1,0 +1,51 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+        <title>Аукцион невиданной щедрости!</title>
+    </head>
+    <body>
+
+        <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+            <h5 class="my-0 mr-md-auto font-weight-normal"><a href="{% url 'main' %}">Аукцион</a></h5>
+            {% if user.is_authenticated %}
+            <a class="btn btn-outline-primary" style="margin-right: 10px" href="/?logout=true">Выйти</a>
+            {% else %}
+            <a class="btn btn-outline-primary" style="margin-right: 10px" href="{% url 'login' %}">Войти</a>
+            <a class="btn btn-outline-primary" href="{% url 'registration' %}">Регистрация</a>
+            {% endif %}
+        </div>
+
+        <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+            <h1 class="display-4">{% block title %}{% endblock %}</h1>
+            {% if request.path == '/' %}
+                <p class="lead">Вы можете сделать ставку не чаще, чем раз в 30 секунд.</p>
+            {% endif %}
+        </div>
+
+        <div class="container">
+            {%  block content %}{% endblock %}
+
+            <footer class="pt-4 my-md-5 pt-md-5 border-top">
+                <div class="row">
+                    <div class="col-12 col-md">
+                        <img class="mb-2" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="24" height="24">
+                        <small class="d-block mb-3 text-muted">© 2017-2018</small>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+        {% comment %} Bootstrap scripts{% endcomment %}
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+        <script type="text/javascript" src="{% static 'js/jquery.dotdotdot.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+    </body>
+</html>
